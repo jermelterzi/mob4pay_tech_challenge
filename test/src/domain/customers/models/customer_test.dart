@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mob4pay_tech_challenge/src/domain/models/customer.dart';
+import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart';
 
 void main() {
   group('Customer -', () {
