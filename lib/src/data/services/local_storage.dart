@@ -12,18 +12,18 @@ abstract class LocalStorage {
 }
 
 class LocalStorageImpl implements LocalStorage {
-  final Database database;
+  final Database _database;
 
-  LocalStorageImpl({required this.database});
+  LocalStorageImpl({required Database database}) : _database = database;
 
   @override
   Future<List<Map<String, dynamic>>> getAll({required String table}) {
-    return database.query(table);
+    return _database.query(table);
   }
 
   @override
   Future<void> removeAll({required String table}) {
-    return database.delete(table);
+    return _database.delete(table);
   }
 
   @override
@@ -31,10 +31,12 @@ class LocalStorageImpl implements LocalStorage {
     required String table,
     required Map<String, dynamic> value,
   }) async {
-    await database.insert(
+    await _database.insert(
       table,
       value,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 }
+
+enum Tables { customers }

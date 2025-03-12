@@ -11,6 +11,36 @@ class CustomersFixtures {
     'state': 'SP'
   };
 
+  static const tMaps = [
+    {
+      'id': 1,
+      'name': 'João da Silva Barbosa',
+      'age': 30,
+      'email': 'jsilva@email.com',
+      'address': 'Rua Serra da Japi',
+      'city': 'São Paulo',
+      'state': 'SP'
+    },
+    {
+      'id': 2,
+      'name': 'Raquel Pereira Motta',
+      'age': 26,
+      'email': 'raquel@email.com',
+      'address': 'Rua Julio Colaço',
+      'city': 'São Paulo',
+      'state': 'SP'
+    },
+    {
+      'id': 3,
+      'name': 'Thiago Eduardo Maranhão',
+      'age': 55,
+      'email': 'thiaguinho@email.com',
+      'address': 'Rua Tuiuti',
+      'city': 'São Paulo',
+      'state': 'SP'
+    }
+  ];
+
   static const tModel = Customer(
     id: 1,
     name: 'João da Silva Barbosa',
@@ -20,6 +50,36 @@ class CustomersFixtures {
     city: 'São Paulo',
     state: 'SP',
   );
+
+  static const tModels = [
+    Customer(
+      id: 1,
+      name: 'João da Silva Barbosa',
+      age: 30,
+      email: 'jsilva@email.com',
+      address: 'Rua Serra da Japi',
+      city: 'São Paulo',
+      state: 'SP',
+    ),
+    Customer(
+      id: 2,
+      name: 'Raquel Pereira Motta',
+      age: 26,
+      email: 'raquel@email.com',
+      address: 'Rua Julio Colaço',
+      city: 'São Paulo',
+      state: 'SP',
+    ),
+    Customer(
+      id: 3,
+      name: 'Thiago Eduardo Maranhão',
+      age: 55,
+      email: 'thiaguinho@email.com',
+      address: 'Rua Tuiuti',
+      city: 'São Paulo',
+      state: 'SP',
+    ),
+  ];
 
   static const tRemoteMap = {
     'id': 1,
