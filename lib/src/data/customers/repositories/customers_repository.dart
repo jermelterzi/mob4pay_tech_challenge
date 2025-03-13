@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_local_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart';
@@ -28,7 +29,13 @@ class CustomersRepositoryImpl implements CustomersRepository {
 
   @override
   AsyncResult<List<Customer>> synchronizeCustomers() async {
-    final remoteCustomers = await _remoteDataSource.fetchCustomers();
+    late final List<Customer> remoteCustomers;
+
+    try {
+      remoteCustomers = await _remoteDataSource.fetchCustomers();
+    } on DioException catch (e) {
+      return Failure(DioException(requestOptions: e.requestOptions));
+    }
 
     final savedCustomers = await _localDataSource.getCustomers();
 

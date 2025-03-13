@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_local_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
@@ -53,6 +54,26 @@ void main() {
     });
 
     group('synchronizeCustomers:', () {
+      test(
+        'Deve retornar uma falha quando ocorrer qualquer erro ao buscar os '
+        'clientes no servidor',
+        () async {
+          // PREPARAÇÃO
+          when(
+            customersRemoteDataSourceMock.fetchCustomers(),
+          ).thenThrow(
+            DioException(requestOptions: RequestOptions()),
+          );
+
+          // AÇÃO
+          final syncCustomersResult =
+              await customersRepository.synchronizeCustomers();
+
+          // VERIFICAÇÃO
+          expect(syncCustomersResult, isA<Failure>());
+        },
+      );
+
       test(
         'Deve retornar um sucesso quando o usuário ainda não possuir nenhum '
         'cliente salvo',
