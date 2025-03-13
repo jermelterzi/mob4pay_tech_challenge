@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mob4pay_tech_challenge/src/config/router.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_local_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
+import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -27,7 +29,11 @@ Future<void> setupDependencies() async {
         remoteDataSource: getIt(),
         localDataSource: getIt(),
       ),
-    );
+    )
+    ..registerFactory<SplashViewmodel>(
+      () => SplashViewmodel(customersRepository: getIt()),
+    )
+    ..registerLazySingleton<AppRouter>(() => AppRouter());
 
   await getIt.allReady();
 }
@@ -39,7 +45,7 @@ Future<Database> _initAppDatabase() async {
     version: 1,
     onCreate: (db, _) {
       return db.execute(
-        'CREATE TABLE costumers(id INTEGER PRIMARY KEY, name TEXT, age INTEGER, email TEXT, address TEXT, city TEXT, state TEXT)',
+        'CREATE TABLE customers(id INTEGER PRIMARY KEY, name TEXT, age INTEGER, email TEXT, address TEXT, city TEXT, state TEXT)',
       );
     },
   );
