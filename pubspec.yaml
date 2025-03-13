@@ -25,6 +25,7 @@ dev_dependencies:
   lint: ^2.8.0
   mockito: ^5.4.5
   retrofit_generator: '>=9.0.0 <10.0.0'
+  sqflite_common_ffi: ^2.3.5
 
 flutter:
   uses-material-design: true
