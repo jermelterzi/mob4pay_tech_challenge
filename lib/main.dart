@@ -7,5 +7,5 @@ void main() async {
 
   await setupDependencies();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
