@@ -4,6 +4,8 @@ import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart
 import 'package:result_dart/result_dart.dart';
 
 abstract class CustomersRepository {
+  AsyncResult<List<Customer>> getCustomers();
+
   AsyncResult<List<Customer>> synchronizeCustomers();
 }
 
@@ -16,6 +18,13 @@ class CustomersRepositoryImpl implements CustomersRepository {
       required CustomersLocalDataSource localDataSource})
       : _remoteDataSource = remoteDataSource,
         _localDataSource = localDataSource;
+
+  @override
+  AsyncResult<List<Customer>> getCustomers() async {
+    final savedCustomers = await _localDataSource.getCustomers();
+
+    return Success(savedCustomers);
+  }
 
   @override
   AsyncResult<List<Customer>> synchronizeCustomers() async {

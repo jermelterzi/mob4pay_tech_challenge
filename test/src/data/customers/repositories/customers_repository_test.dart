@@ -28,6 +28,30 @@ void main() {
   });
 
   group('CustomersRepository -', () {
+    group('getCustomers:', () {
+      test(
+        'Deve retornar um sucesso com a lista de clientes salva localmente '
+        'quando este método for chamado',
+        () async {
+          // PREPARAÇÃO
+          when(
+            customersLocalDataSourceMock.getCustomers(),
+          ).thenAnswer(
+            (_) async => CustomersFixtures.tModels,
+          );
+
+          // AÇÃO
+          final getCustomersResult = await customersRepository.getCustomers();
+
+          // PREPARAÇÃO
+          expect(
+            getCustomersResult,
+            equals(const Success(CustomersFixtures.tModels)),
+          );
+        },
+      );
+    });
+
     group('synchronizeCustomers:', () {
       test(
         'Deve retornar um sucesso quando o usuário ainda não possuir nenhum '
