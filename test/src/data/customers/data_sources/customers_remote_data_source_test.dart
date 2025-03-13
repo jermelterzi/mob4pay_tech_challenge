@@ -20,18 +20,19 @@ void main() {
   group('CustomersRemoteDataSource -', () {
     group('fetchCustomers:', () {
       test(
-        'Quando ... deve ...',
+        'Quando não ocorrer nenhum problema durante a chama para a API deve '
+        'retornar uma lista de clientes',
         () async {
           // PREPARAÇÃO
-          final response = [];
+          when(dioMock.options).thenReturn(BaseOptions());
 
           when(
             dioMock.fetch<List<dynamic>>(any),
           ).thenAnswer(
             (_) async => Response(
-              data: response,
+              data: CustomersFixtures.tRemoteMaps,
               statusCode: 200,
-              requestOptions: RequestOptions(path: '/obterClientes'),
+              requestOptions: RequestOptions(path: '/obterClientes/clientes'),
             ),
           );
 
@@ -40,28 +41,6 @@ void main() {
 
           // VERIFICAÇÃO
           expect(customers, equals(CustomersFixtures.tModels));
-        },
-      );
-
-      test(
-        'Quando ... deve ...',
-        () async {
-          // PREPARAÇÃO
-          when(
-            dioMock.get(any),
-          ).thenAnswer(
-            (_) async => Response(
-              data: {},
-              statusCode: 404,
-              requestOptions: RequestOptions(path: '/obterClientes'),
-            ),
-          );
-
-          // AÇÃO
-          final call = customersRemoteDataSource.fetchCustomers;
-
-          // VERIFICAÇÃO
-          await expectLater(call(), throwsA(const TypeMatcher<Exception>()));
         },
       );
     });

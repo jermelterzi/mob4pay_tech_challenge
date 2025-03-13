@@ -13,7 +13,7 @@ final getIt = GetIt.instance;
 Future<void> setupDependencies() async {
   getIt
     ..registerSingletonAsync<Database>(_initAppDatabase)
-    ..registerLazySingleton<Dio>(() => Dio())
+    ..registerLazySingleton<Dio>(_configureDio)
     ..registerLazySingleton<LocalStorage>(
       () => LocalStorageImpl(database: getIt()),
     )
@@ -47,4 +47,12 @@ Future<Database> _initAppDatabase() async {
   );
 
   return database;
+}
+
+Dio _configureDio() {
+  final dio = Dio();
+
+  dio.interceptors.add(CustomersInterceptor());
+
+  return dio;
 }

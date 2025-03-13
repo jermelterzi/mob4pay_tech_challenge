@@ -11,3 +11,20 @@ abstract class CustomersRemoteDataSource {
   @GET('/obterClientes')
   Future<List<Customer>> fetchCustomers();
 }
+
+class CustomersInterceptor extends Interceptor {
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (response.data is! Map<String, dynamic>) {
+      return super.onResponse(response, handler);
+    }
+
+    final responseMap = response.data as Map<String, dynamic>;
+
+    if (responseMap.containsKey('clientes')) {
+      response.data = responseMap['clientes'];
+    }
+
+    super.onResponse(response, handler);
+  }
+}

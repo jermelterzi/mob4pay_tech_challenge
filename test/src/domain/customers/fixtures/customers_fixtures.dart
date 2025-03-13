@@ -90,4 +90,34 @@ class CustomersFixtures {
     'cidade': 'São Paulo',
     'estado': 'SP'
   };
+
+  static const tRemoteMaps = [
+    {
+      'id': 1,
+      'nome': 'João da Silva Barbosa',
+      'idade': 30,
+      'email': 'jsilva@email.com',
+      'endereco': 'Rua Serra da Japi',
+      'cidade': 'São Paulo',
+      'estado': 'SP'
+    },
+    {
+      'id': 2,
+      'nome': 'Raquel Pereira Motta',
+      'idade': 26,
+      'email': 'raquel@email.com',
+      'endereco': 'Rua Julio Colaço',
+      'cidade': 'São Paulo',
+      'estado': 'SP'
+    },
+    {
+      'id': 3,
+      'nome': 'Thiago Eduardo Maranhão',
+      'idade': 55,
+      'email': 'thiaguinho@email.com',
+      'endereco': 'Rua Tuiuti',
+      'cidade': 'São Paulo',
+      'estado': 'SP'
+    },
+  ];
 }
