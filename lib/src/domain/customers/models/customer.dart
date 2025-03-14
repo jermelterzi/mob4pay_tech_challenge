@@ -1,4 +1,6 @@
-class Customer {
+import 'package:equatable/equatable.dart';
+
+class Customer extends Equatable {
   final int id;
   final String name;
   final int age;
@@ -29,15 +31,15 @@ class Customer {
     );
   }
 
-  factory Customer.fromRemoteMap(Map<String, dynamic> remoteMap) {
+  factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
-      id: remoteMap['id'] as int? ?? 0,
-      name: remoteMap['nome'] as String? ?? '',
-      age: remoteMap['idade'] as int? ?? 0,
-      email: remoteMap['email'] as String? ?? '',
-      address: remoteMap['endereco'] as String? ?? '',
-      city: remoteMap['cidade'] as String? ?? '',
-      state: remoteMap['estado'] as String? ?? '',
+      id: json['id'] as int? ?? 0,
+      name: json['nome'] as String? ?? '',
+      age: json['idade'] as int? ?? 0,
+      email: json['email'] as String? ?? '',
+      address: json['endereco'] as String? ?? '',
+      city: json['cidade'] as String? ?? '',
+      state: json['estado'] as String? ?? '',
     );
   }
 
@@ -54,27 +56,15 @@ class Customer {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Customer &&
-        other.id == id &&
-        other.name == name &&
-        other.age == age &&
-        other.email == email &&
-        other.address == address &&
-        other.city == city &&
-        other.state == state;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        age.hashCode ^
-        email.hashCode ^
-        address.hashCode ^
-        city.hashCode ^
-        state.hashCode;
+  List<Object> get props {
+    return [
+      id,
+      name,
+      age,
+      email,
+      address,
+      city,
+      state,
+    ];
   }
 }

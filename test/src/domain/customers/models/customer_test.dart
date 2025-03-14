@@ -17,10 +17,10 @@ void main() {
     );
 
     test(
-      'fromRemoteMap',
+      'fromJson',
       () {
         // AÇÃO
-        final customer = Customer.fromRemoteMap(CustomersFixtures.tRemoteMap);
+        final customer = Customer.fromJson(CustomersFixtures.tRemoteMap);
 
         // VERIFICAÇÃO
         expect(customer, equals(CustomersFixtures.tModel));

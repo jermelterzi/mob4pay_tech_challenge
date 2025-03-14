@@ -39,7 +39,7 @@ class _CustomersRemoteDataSource implements CustomersRemoteDataSource {
     late List<Customer> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) => Customer.fromRemoteMap(i as Map<String, dynamic>))
+          .map((dynamic i) => Customer.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
