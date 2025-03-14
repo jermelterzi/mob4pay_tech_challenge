@@ -5,6 +5,7 @@ import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
+import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -29,7 +30,10 @@ Future<void> setupDependencies() async {
         localDataSource: getIt(),
       ),
     )
-    ..registerLazySingleton<AppRouter>(() => AppRouter());
+    ..registerLazySingleton<AppRouter>(() => AppRouter())
+    ..registerFactory<SplashViewmodel>(
+      () => SplashViewmodel(customersRepository: getIt()),
+    );
 
   await getIt.allReady();
 }

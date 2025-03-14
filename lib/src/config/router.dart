@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:mob4pay_tech_challenge/src/ui/splash/splash_page.dart';
+import 'package:mob4pay_tech_challenge/src/ui/splash/pages/splash_page.dart';
 
 part 'router.gr.dart';
 
