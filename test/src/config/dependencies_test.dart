@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mob4pay_tech_challenge/src/config/dependencies.dart';
+import 'package:mob4pay_tech_challenge/src/config/router.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_local_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
+import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
@@ -77,7 +79,7 @@ void main() {
       );
 
       test(
-        'Deve retornar uma instância do CustomersRemoteDataSource quando esta '
+        'Deve retornar uma instância do CustomersRepository quando esta '
         'dependência for necessária',
         () {
           // AÇÃO
@@ -85,6 +87,30 @@ void main() {
 
           // VERIFICAÇÃO
           expect(database, isA<CustomersRepository>());
+        },
+      );
+
+      test(
+        'Deve retornar uma instância do AppRouter quando esta dependência for '
+        'necessária',
+        () {
+          // AÇÃO
+          final database = getIt<AppRouter>();
+
+          // VERIFICAÇÃO
+          expect(database, isA<AppRouter>());
+        },
+      );
+
+      test(
+        'Deve retornar uma instância do SplashViewmodel quando esta dependência'
+        ' for necessária',
+        () {
+          // AÇÃO
+          final database = getIt<SplashViewmodel>();
+
+          // VERIFICAÇÃO
+          expect(database, isA<SplashViewmodel>());
         },
       );
     });
