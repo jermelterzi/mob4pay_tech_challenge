@@ -6,6 +6,8 @@
 import 'dart:async' as _i3;
 import 'dart:ui' as _i4;
 
+import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart'
+    as _i5;
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -114,4 +116,18 @@ class MockSplashViewmodel extends _i1.Mock implements _i2.SplashViewmodel {
     Invocation.method(#notifyListeners, []),
     returnValueForMissingStub: null,
   );
+}
+
+/// A class which mocks [ToastService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockToastService extends _i1.Mock implements _i5.ToastService {
+  @override
+  _i3.Future<void> showErrorToast({String? message}) =>
+      (super.noSuchMethod(
+            Invocation.method(#showErrorToast, [], {#message: message}),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }

@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mob4pay_tech_challenge/src/config/dependencies.dart';
+import 'package:mob4pay_tech_challenge/src/config/router.dart';
+import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/pages/splash_page.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-@GenerateNiceMocks([MockSpec<SplashViewmodel>()])
+@GenerateNiceMocks([MockSpec<SplashViewmodel>(), MockSpec<ToastService>()])
 import 'splash_page_test.mocks.dart';
+
+class MockListener extends Mock {
+  void call();
+}
 
 void main() {
   late final MockSplashViewmodel splashViewmodelMock;
+  late final MockListener listenerMock;
+  late final AppRouter appRouter;
+  late final MockToastService toastServiceMock;
 
   setUpAll(() {
     splashViewmodelMock = MockSplashViewmodel();
+    listenerMock = MockListener();
+    appRouter = AppRouter();
+    toastServiceMock = MockToastService();
 
-    getIt.registerFactory<SplashViewmodel>(() => splashViewmodelMock);
+    appRouter.navigationHistory.addListener(listenerMock.call);
+
+    getIt
+      ..registerFactory<SplashViewmodel>(() => splashViewmodelMock)
+      ..registerLazySingleton<AppRouter>(() => appRouter)
+      ..registerFactory<ToastService>(() => toastServiceMock);
   });
 
   group('SplashPage -', () {
@@ -64,7 +81,8 @@ void main() {
         splashViewmodelMock.notifyListeners();
         await tester.pumpAndSettle();
 
-        // VERIFICAÇÃO`
+        // VERIFICAÇÃO
+        // verify(listenerMock()).called(1);
       },
     );
 
@@ -77,8 +95,14 @@ void main() {
 
         // AÇÃO
         await tester.pumpWidget(const SplashPage());
+        await tester.pumpAndSettle();
 
-        // VERIFICAÇÃO`
+        // VERIFICAÇÃO
+        verify(
+          toastServiceMock.showErrorToast(
+            message: 'Houve um erro ao sincronizar os clientes',
+          ),
+        ).called(1);
       },
     );
   });

@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mob4pay_tech_challenge/src/config/dependencies.dart';
+import 'package:mob4pay_tech_challenge/src/config/router.dart';
+import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -15,16 +16,20 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   late final SplashViewmodel _viewmodel;
+  late final AppRouter _router;
 
   @override
   void initState() {
     super.initState();
 
     _viewmodel = getIt<SplashViewmodel>();
+    _router = getIt<AppRouter>();
 
     _viewmodel.addListener(() {
       if (_viewmodel.isLoaded) {
-        // TODO: MOVER PARA A TELA DE CLIENTES
+        _router.replace(const CustomersRoute());
+
+        return;
       }
     });
 
@@ -51,8 +56,22 @@ class _SplashPageState extends State<SplashPage> {
   }
 }
 
-class _LoadingText extends StatelessWidget {
+class _LoadingText extends StatefulWidget {
   const _LoadingText();
+
+  @override
+  State<_LoadingText> createState() => _LoadingTextState();
+}
+
+class _LoadingTextState extends State<_LoadingText> {
+  late final ToastService _toastService;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _toastService = getIt<ToastService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +81,9 @@ class _LoadingText extends StatelessWidget {
       listenable: splashViewmodel,
       builder: (context, _) {
         if (splashViewmodel.hasError) {
-          _showErrorToast('Houve um erro ao sincronizar os clients');
+          _toastService.showErrorToast(
+            message: 'Houve um erro ao sincronizar os clientes',
+          );
         }
 
         return Visibility(
@@ -74,21 +95,13 @@ class _LoadingText extends StatelessWidget {
               fontSize: 16,
               color: Colors.black,
               decoration: TextDecoration.none,
+              fontWeight: FontWeight.w500,
+              height: 6 / 4,
+              letterSpacing: .15,
             ),
           ),
         );
       },
-    );
-  }
-
-  void _showErrorToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
     );
   }
 }
