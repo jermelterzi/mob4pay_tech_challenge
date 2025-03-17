@@ -6,6 +6,7 @@ import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
 import 'package:mob4pay_tech_challenge/src/ui/customers/viewmodels/customers_viewmodel.dart';
+import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -37,7 +38,8 @@ Future<void> setupDependencies() async {
     )
     ..registerFactory<CustomersViewmodel>(
       () => CustomersViewmodel(customersRepository: getIt()),
-    );
+    )
+    ..registerFactory<ToastService>(() => ToastServiceImpl());
 
   await getIt.allReady();
 }

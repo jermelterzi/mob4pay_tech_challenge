@@ -6,6 +6,8 @@ import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
+import 'package:mob4pay_tech_challenge/src/ui/customers/viewmodels/customers_viewmodel.dart';
+import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -111,6 +113,30 @@ void main() {
 
           // VERIFICAÇÃO
           expect(database, isA<SplashViewmodel>());
+        },
+      );
+
+      test(
+        'Deve retornar uma instância do CustomersViewmodel quando esta '
+        'dependência for necessária',
+        () {
+          // AÇÃO
+          final database = getIt<CustomersViewmodel>();
+
+          // VERIFICAÇÃO
+          expect(database, isA<CustomersViewmodel>());
+        },
+      );
+
+      test(
+        'Deve retornar uma instância do ToastService quando esta dependência'
+        ' for necessária',
+        () {
+          // AÇÃO
+          final database = getIt<ToastService>();
+
+          // VERIFICAÇÃO
+          expect(database, isA<ToastService>());
         },
       );
     });
