@@ -29,6 +29,7 @@ class CustomersViewmodel extends ChangeNotifier {
       (_) {
         hasError = true;
         isLoading = false;
+        customers = [];
         notifyListeners();
 
         return;
