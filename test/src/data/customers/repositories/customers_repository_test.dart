@@ -75,6 +75,32 @@ void main() {
       );
 
       test(
+        'Deve retornar uma falha quando ocorrer qualquer erro ao buscar os '
+        'clientes salvos',
+        () async {
+          // PREPARAÇÃO
+          when(
+            customersRemoteDataSourceMock.fetchCustomers(),
+          ).thenAnswer(
+            (_) async => CustomersFixtures.tModels,
+          );
+
+          when(
+            customersLocalDataSourceMock.getCustomers(),
+          ).thenThrow(
+            TypeError(),
+          );
+
+          // AÇÃO
+          final syncCustomersResult =
+              await customersRepository.synchronizeCustomers();
+
+          // VERIFICAÇÃO
+          expect(syncCustomersResult, isA<Failure>());
+        },
+      );
+
+      test(
         'Deve retornar um sucesso quando o usuário ainda não possuir nenhum '
         'cliente salvo',
         () async {
