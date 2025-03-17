@@ -11,10 +11,11 @@ import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart
 import 'package:mob4pay_tech_challenge/src/ui/customers/viewmodels/customers_viewmodel.dart'
     as _i5;
 import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart'
-    as _i7;
+    as _i8;
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -46,21 +47,6 @@ class MockSplashViewmodel extends _i1.Mock implements _i2.SplashViewmodel {
   @override
   set isLoading(bool? _isLoading) => super.noSuchMethod(
     Invocation.setter(#isLoading, _isLoading),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  bool get isLoaded =>
-      (super.noSuchMethod(
-            Invocation.getter(#isLoaded),
-            returnValue: false,
-            returnValueForMissingStub: false,
-          )
-          as bool);
-
-  @override
-  set isLoaded(bool? _isLoaded) => super.noSuchMethod(
-    Invocation.setter(#isLoaded, _isLoaded),
     returnValueForMissingStub: null,
   );
 
@@ -158,17 +144,23 @@ class MockCustomersViewmodel extends _i1.Mock
   );
 
   @override
-  bool get hasError =>
+  String get errorMessage =>
       (super.noSuchMethod(
-            Invocation.getter(#hasError),
-            returnValue: false,
-            returnValueForMissingStub: false,
+            Invocation.getter(#errorMessage),
+            returnValue: _i7.dummyValue<String>(
+              this,
+              Invocation.getter(#errorMessage),
+            ),
+            returnValueForMissingStub: _i7.dummyValue<String>(
+              this,
+              Invocation.getter(#errorMessage),
+            ),
           )
-          as bool);
+          as String);
 
   @override
-  set hasError(bool? _hasError) => super.noSuchMethod(
-    Invocation.setter(#hasError, _hasError),
+  set errorMessage(String? _errorMessage) => super.noSuchMethod(
+    Invocation.setter(#errorMessage, _errorMessage),
     returnValueForMissingStub: null,
   );
 
@@ -185,6 +177,15 @@ class MockCustomersViewmodel extends _i1.Mock
   _i3.Future<void> getCustomers() =>
       (super.noSuchMethod(
             Invocation.method(#getCustomers, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> syncCustomers() =>
+      (super.noSuchMethod(
+            Invocation.method(#syncCustomers, []),
             returnValue: _i3.Future<void>.value(),
             returnValueForMissingStub: _i3.Future<void>.value(),
           )
@@ -218,7 +219,7 @@ class MockCustomersViewmodel extends _i1.Mock
 /// A class which mocks [ToastService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockToastService extends _i1.Mock implements _i7.ToastService {
+class MockToastService extends _i1.Mock implements _i8.ToastService {
   @override
   _i3.Future<void> showErrorToast({String? message}) =>
       (super.noSuchMethod(

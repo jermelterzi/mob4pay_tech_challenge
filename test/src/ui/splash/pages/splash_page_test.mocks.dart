@@ -46,21 +46,6 @@ class MockSplashViewmodel extends _i1.Mock implements _i2.SplashViewmodel {
   );
 
   @override
-  bool get isLoaded =>
-      (super.noSuchMethod(
-            Invocation.getter(#isLoaded),
-            returnValue: false,
-            returnValueForMissingStub: false,
-          )
-          as bool);
-
-  @override
-  set isLoaded(bool? _isLoaded) => super.noSuchMethod(
-    Invocation.setter(#isLoaded, _isLoaded),
-    returnValueForMissingStub: null,
-  );
-
-  @override
   bool get hasError =>
       (super.noSuchMethod(
             Invocation.getter(#hasError),

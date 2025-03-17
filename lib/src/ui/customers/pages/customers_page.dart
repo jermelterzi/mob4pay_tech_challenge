@@ -54,11 +54,9 @@ class _CustomersPageState extends State<CustomersPage> {
                 return const _CustomersLoading();
               }
 
-              if (_viewmodel.hasError) {
+              if (_viewmodel.errorMessage.isNotEmpty) {
                 _toastService.showErrorToast(
-                  message:
-                      'Houve um erro ao buscar os clientes salvos. Por favor, '
-                      'sincronize.',
+                  message: _viewmodel.errorMessage,
                 );
               }
 
@@ -137,49 +135,53 @@ class _CustomersListState extends State<_CustomersList> {
     final customersViewmodel = context.read<CustomersViewmodel>();
     final customers = customersViewmodel.customers;
 
-    return ListView.builder(
-      itemCount: customers.length,
-      itemBuilder: (context, index) {
-        final customer = customers[index];
+    return RefreshIndicator(
+      onRefresh: customersViewmodel.syncCustomers,
+      child: ListView.builder(
+        itemCount: customers.length,
+        itemBuilder: (context, index) {
+          final customer = customers[index];
 
-        return Card(
-          key: Key('CustomerCard${customer.id}'),
-          elevation: 3,
-          child: ListTile(
-            onTap: () => router.push(CustomerDetailsRoute(customer: customer)),
-            leading: CircleAvatar(
-              child: Text(
-                customer.id.toString(),
+          return Card(
+            key: Key('CustomerCard${customer.id}'),
+            elevation: 3,
+            child: ListTile(
+              onTap: () =>
+                  router.push(CustomerDetailsRoute(customer: customer)),
+              leading: CircleAvatar(
+                child: Text(
+                  customer.id.toString(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    height: 6 / 4,
+                    letterSpacing: .15,
+                  ),
+                ),
+              ),
+              title: Text(
+                customer.name,
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  height: 6 / 4,
+                  fontSize: 14,
+                  height: 24 / 14,
                   letterSpacing: .15,
                 ),
               ),
-            ),
-            title: Text(
-              customer.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                height: 24 / 14,
-                letterSpacing: .15,
+              subtitle: Text(
+                'Estado: ${customer.state}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  height: 4 / 3,
+                  letterSpacing: .4,
+                ),
               ),
+              trailing: const Icon(Icons.chevron_right),
             ),
-            subtitle: Text(
-              'Estado: ${customer.state}',
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
-                height: 4 / 3,
-                letterSpacing: .4,
-              ),
-            ),
-            trailing: const Icon(Icons.chevron_right),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

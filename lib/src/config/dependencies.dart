@@ -5,6 +5,7 @@ import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
+import 'package:mob4pay_tech_challenge/src/domain/customers/use_cases/customers_sync_use_case.dart';
 import 'package:mob4pay_tech_challenge/src/ui/customers/viewmodels/customers_viewmodel.dart';
 import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
@@ -34,12 +35,18 @@ Future<void> setupDependencies() async {
     )
     ..registerLazySingleton<AppRouter>(() => AppRouter())
     ..registerFactory<SplashViewmodel>(
-      () => SplashViewmodel(customersRepository: getIt()),
+      () => SplashViewmodel(customersSyncUseCase: getIt()),
     )
     ..registerFactory<CustomersViewmodel>(
-      () => CustomersViewmodel(customersRepository: getIt()),
+      () => CustomersViewmodel(
+        customersRepository: getIt(),
+        customersSyncUseCase: getIt(),
+      ),
     )
-    ..registerFactory<ToastService>(() => ToastServiceImpl());
+    ..registerFactory<ToastService>(() => ToastServiceImpl())
+    ..registerLazySingleton<CustomersSyncUseCase>(
+      () => CustomersSyncUseCaseImpl(customersRepository: getIt()),
+    );
 
   await getIt.allReady();
 }

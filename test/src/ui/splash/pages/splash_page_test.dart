@@ -74,7 +74,7 @@ void main() {
       (tester) async {
         // PREPARAÇÃO
         when(splashViewmodelMock.initApp()).thenAnswer((_) async {});
-        when(splashViewmodelMock.isLoaded).thenReturn(true);
+        when(splashViewmodelMock.isLoading).thenReturn(false);
 
         // AÇÃO
         await tester.pumpWidget(const SplashPage());

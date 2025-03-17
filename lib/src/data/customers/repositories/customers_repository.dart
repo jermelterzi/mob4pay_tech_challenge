@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_local_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
+import 'package:mob4pay_tech_challenge/src/data/errors/local_storage_errors.dart';
 import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -33,11 +34,19 @@ class CustomersRepositoryImpl implements CustomersRepository {
 
     try {
       remoteCustomers = await _remoteDataSource.fetchCustomers();
-    } on DioException catch (e) {
-      return Failure(DioException(requestOptions: e.requestOptions));
+    } on DioException catch (exception) {
+      return Failure(DioException(requestOptions: exception.requestOptions));
     }
 
-    final savedCustomers = await _localDataSource.getCustomers();
+    late final List<Customer> savedCustomers;
+
+    try {
+      savedCustomers = await _localDataSource.getCustomers();
+    } catch (error) {
+      if (error is Exception) return Failure(error);
+
+      return Failure(LocalStorageException());
+    }
 
     if (savedCustomers.isEmpty) {
       for (final customer in remoteCustomers) {

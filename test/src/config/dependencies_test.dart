@@ -6,6 +6,7 @@ import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers
 import 'package:mob4pay_tech_challenge/src/data/customers/data_sources/customers_remote_data_source.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/data/services/local_storage.dart';
+import 'package:mob4pay_tech_challenge/src/domain/customers/use_cases/customers_sync_use_case.dart';
 import 'package:mob4pay_tech_challenge/src/ui/customers/viewmodels/customers_viewmodel.dart';
 import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart';
 import 'package:mob4pay_tech_challenge/src/ui/splash/viewmodels/splash_viewmodel.dart';
@@ -137,6 +138,18 @@ void main() {
 
           // VERIFICAÇÃO
           expect(database, isA<ToastService>());
+        },
+      );
+
+      test(
+        'Deve retornar uma instância do CustomersSyncUseCase quando esta dependência'
+        ' for necessária',
+        () {
+          // AÇÃO
+          final database = getIt<CustomersSyncUseCase>();
+
+          // VERIFICAÇÃO
+          expect(database, isA<CustomersSyncUseCase>());
         },
       );
     });

@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
     _router = getIt<AppRouter>();
 
     _viewmodel.addListener(() {
-      if (_viewmodel.isLoaded) {
+      if (!_viewmodel.isLoading) {
         _router.replace(const CustomersRoute());
 
         return;
