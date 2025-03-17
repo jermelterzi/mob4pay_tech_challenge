@@ -25,7 +25,7 @@ void main() {
   group('CustomersSyncUseCase -', () {
     group('syncCustomers:', () {
       test(
-        'Deve buscar os clientes salvos e retorná-los através de um Success '
+        'Deve buscar os clientes salvos e retorná-los através de um Failure '
         'quando ocorrer um erro ao buscar os clientes no servidor',
         () async {
           // PREPARAÇÃO
@@ -52,7 +52,40 @@ void main() {
               await customersSyncUseCase.syncCustomers();
 
           // VERIFICAÇÃO
-          expect(syncCustomersResult, const Success(CustomersFixtures.tModels));
+          expect(syncCustomersResult, const Failure(CustomersFixtures.tModels));
+          verify(customersRepositoryMock.getCustomers()).called(1);
+        },
+      );
+
+      test(
+        'Deve retornar uma lista de clientes vazia através de um Failure quando'
+        ' ocorrer um erro ao buscar os clientes salvos',
+        () async {
+          // PREPARAÇÃO
+          provideDummy<ResultDart<List<Customer>, Exception>>(
+            const Success(CustomersFixtures.tModels),
+          );
+
+          when(
+            customersRepositoryMock.synchronizeCustomers(),
+          ).thenAnswer(
+            (_) async => Failure(
+              DioException(requestOptions: RequestOptions()),
+            ),
+          );
+
+          when(
+            customersRepositoryMock.getCustomers(),
+          ).thenAnswer(
+            (_) async => Failure(Exception()),
+          );
+
+          // AÇÃO
+          final syncCustomersResult =
+              await customersSyncUseCase.syncCustomers();
+
+          // VERIFICAÇÃO
+          expect(syncCustomersResult, const Failure(<Customer>[]));
           verify(customersRepositoryMock.getCustomers()).called(1);
         },
       );

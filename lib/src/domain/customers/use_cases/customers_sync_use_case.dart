@@ -5,7 +5,7 @@ import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart
 import 'package:result_dart/result_dart.dart';
 
 abstract class CustomersSyncUseCase {
-  AsyncResult<List<Customer>> syncCustomers();
+  Future<ResultDart<List<Customer>, List<Customer>>> syncCustomers();
 }
 
 class CustomersSyncUseCaseImpl implements CustomersSyncUseCase {
@@ -15,15 +15,20 @@ class CustomersSyncUseCaseImpl implements CustomersSyncUseCase {
       : _customersRepository = customersRepository;
 
   @override
-  AsyncResult<List<Customer>> syncCustomers() {
+  Future<ResultDart<List<Customer>, List<Customer>>> syncCustomers() {
     return _customersRepository
         .synchronizeCustomers()
         .flatMapError(_getSavedCustomers);
   }
 
-  Future<ResultDart<List<Customer>, Exception>> _getSavedCustomers(
+  Future<ResultDart<List<Customer>, List<Customer>>> _getSavedCustomers(
     Exception _,
-  ) {
-    return _customersRepository.getCustomers();
+  ) async {
+    final getSavedCustomersResult = await _customersRepository.getCustomers();
+
+    return getSavedCustomersResult.fold(
+      (savedCustomers) => Failure(savedCustomers),
+      (_) => const Failure([]),
+    );
   }
 }
