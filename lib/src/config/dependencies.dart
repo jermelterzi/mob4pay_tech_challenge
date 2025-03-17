@@ -38,7 +38,10 @@ Future<void> setupDependencies() async {
       () => SplashViewmodel(customersSyncUseCase: getIt()),
     )
     ..registerFactory<CustomersViewmodel>(
-      () => CustomersViewmodel(customersRepository: getIt()),
+      () => CustomersViewmodel(
+        customersRepository: getIt(),
+        customersSyncUseCase: getIt(),
+      ),
     )
     ..registerFactory<ToastService>(() => ToastServiceImpl())
     ..registerLazySingleton<CustomersSyncUseCase>(

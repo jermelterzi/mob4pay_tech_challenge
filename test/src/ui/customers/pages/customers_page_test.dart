@@ -58,10 +58,9 @@ void main() {
       ' cliente salvo',
       (tester) async {
         // PREAPAÇÃO
-        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {
-          return;
-        });
+        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {});
 
+        when(customersViewmodelMock.errorMessage).thenReturn('');
         when(customersViewmodelMock.isLoading).thenReturn(false);
         when(customersViewmodelMock.customers).thenReturn([]);
 
@@ -85,9 +84,7 @@ void main() {
       'existirem clientes salvos',
       (tester) async {
         // PREAPAÇÃO
-        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {
-          return;
-        });
+        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {});
 
         when(customersViewmodelMock.isLoading).thenReturn(false);
         when(
@@ -112,9 +109,7 @@ void main() {
       'Deve ir para tela de detalhes do cliente quando um dos cards for apertado',
       (tester) async {
         // PREAPAÇÃO
-        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {
-          return;
-        });
+        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {});
 
         when(customersViewmodelMock.isLoading).thenReturn(false);
         when(
@@ -136,11 +131,13 @@ void main() {
       'Deve exibir um toast quando ocorrer um erro ao buscar os clientes salvos',
       (tester) async {
         // PREAPAÇÃO
-        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {
-          return;
-        });
+        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {});
 
-        when(customersViewmodelMock.hasError).thenReturn(true);
+        when(
+          customersViewmodelMock.errorMessage,
+        ).thenReturn(
+          'Houve um erro ao buscar os clientes salvos. Por favor, sincronize.',
+        );
 
         // AÇÃO
         await tester.pumpWidget(const MaterialApp(home: CustomersPage()));
@@ -152,6 +149,29 @@ void main() {
                 'sincronize.',
           ),
         ).called(1);
+      },
+    );
+
+    testWidgets(
+      'Deve buscar os clientes no servidor quando o usuário scrollar para baixo',
+      (tester) async {
+        // PREAPAÇÃO
+        when(customersViewmodelMock.getCustomers()).thenAnswer((_) async {});
+
+        when(customersViewmodelMock.isLoading).thenReturn(false);
+        when(
+          customersViewmodelMock.customers,
+        ).thenReturn(
+          CustomersFixtures.tModels,
+        );
+
+        // AÇÃO
+        await tester.pumpWidget(const MaterialApp(home: CustomersPage()));
+        await tester.drag(find.byType(ListView), const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        // VERIFICAÇÃO
+        verify(customersViewmodelMock.syncCustomers()).called(1);
       },
     );
   });

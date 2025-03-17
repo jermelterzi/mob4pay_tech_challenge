@@ -3,16 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:ui' as _i5;
+import 'dart:async' as _i5;
+import 'dart:ui' as _i6;
 
 import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart'
     as _i3;
 import 'package:mob4pay_tech_challenge/src/ui/customers/viewmodels/customers_viewmodel.dart'
     as _i2;
 import 'package:mob4pay_tech_challenge/src/ui/services/toast_service.dart'
-    as _i6;
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -64,17 +65,23 @@ class MockCustomersViewmodel extends _i1.Mock
   );
 
   @override
-  bool get hasError =>
+  String get errorMessage =>
       (super.noSuchMethod(
-            Invocation.getter(#hasError),
-            returnValue: false,
-            returnValueForMissingStub: false,
+            Invocation.getter(#errorMessage),
+            returnValue: _i4.dummyValue<String>(
+              this,
+              Invocation.getter(#errorMessage),
+            ),
+            returnValueForMissingStub: _i4.dummyValue<String>(
+              this,
+              Invocation.getter(#errorMessage),
+            ),
           )
-          as bool);
+          as String);
 
   @override
-  set hasError(bool? _hasError) => super.noSuchMethod(
-    Invocation.setter(#hasError, _hasError),
+  set errorMessage(String? _errorMessage) => super.noSuchMethod(
+    Invocation.setter(#errorMessage, _errorMessage),
     returnValueForMissingStub: null,
   );
 
@@ -88,22 +95,31 @@ class MockCustomersViewmodel extends _i1.Mock
           as bool);
 
   @override
-  _i4.Future<void> getCustomers() =>
+  _i5.Future<void> getCustomers() =>
       (super.noSuchMethod(
             Invocation.method(#getCustomers, []),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  _i5.Future<void> syncCustomers() =>
+      (super.noSuchMethod(
+            Invocation.method(#syncCustomers, []),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
     Invocation.method(#addListener, [listener]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
     Invocation.method(#removeListener, [listener]),
     returnValueForMissingStub: null,
   );
@@ -124,13 +140,13 @@ class MockCustomersViewmodel extends _i1.Mock
 /// A class which mocks [ToastService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockToastService extends _i1.Mock implements _i6.ToastService {
+class MockToastService extends _i1.Mock implements _i7.ToastService {
   @override
-  _i4.Future<void> showErrorToast({String? message}) =>
+  _i5.Future<void> showErrorToast({String? message}) =>
       (super.noSuchMethod(
             Invocation.method(#showErrorToast, [], {#message: message}),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }

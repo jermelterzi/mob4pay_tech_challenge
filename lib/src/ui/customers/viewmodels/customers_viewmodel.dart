@@ -1,38 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
 import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart';
+import 'package:mob4pay_tech_challenge/src/domain/customers/use_cases/customers_sync_use_case.dart';
 
 class CustomersViewmodel extends ChangeNotifier {
   final CustomersRepository _customersRepository;
+  final CustomersSyncUseCase _customersSyncUseCase;
 
-  CustomersViewmodel({required CustomersRepository customersRepository})
-      : _customersRepository = customersRepository;
+  CustomersViewmodel({
+    required CustomersRepository customersRepository,
+    required CustomersSyncUseCase customersSyncUseCase,
+  })  : _customersRepository = customersRepository,
+        _customersSyncUseCase = customersSyncUseCase;
 
   List<Customer> customers = [];
   bool isLoading = false;
-  bool hasError = false;
+  String errorMessage = '';
 
   Future<void> getCustomers() async {
     isLoading = true;
     notifyListeners();
 
-    final getSavedCustomers = await _customersRepository.getCustomers();
+    final getSavedCustomersResult = await _customersRepository.getCustomers();
 
-    return getSavedCustomers.fold(
+    return getSavedCustomersResult.fold(
       (savedCustomers) {
         customers = savedCustomers;
         isLoading = false;
-        notifyListeners();
-
-        return;
+        return notifyListeners();
       },
       (_) {
-        hasError = true;
+        errorMessage =
+            'Houve um erro ao buscar os clientes salvos. Por favor, sincronize.';
         isLoading = false;
         customers = [];
-        notifyListeners();
+        return notifyListeners();
+      },
+    );
+  }
 
-        return;
+  Future<void> syncCustomers() async {
+    isLoading = true;
+    notifyListeners();
+
+    final syncCustomersResult = await _customersSyncUseCase.syncCustomers();
+
+    return syncCustomersResult.fold(
+      (syncedCustomers) {
+        customers = syncedCustomers;
+        isLoading = false;
+        errorMessage = '';
+        return notifyListeners();
+      },
+      (notSyncedCustomers) {
+        customers = notSyncedCustomers;
+        errorMessage = 'Houve um erro ao sincronizar os clientes.';
+        isLoading = false;
+        return notifyListeners();
       },
     );
   }
