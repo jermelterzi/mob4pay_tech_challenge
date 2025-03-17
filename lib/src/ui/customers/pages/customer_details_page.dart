@@ -26,20 +26,25 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        backgroundColor: colorScheme.primary,
+        title: Text(
           'Informações do Cliente',
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 20,
             height: 6 / 5,
             letterSpacing: .15,
+            color: colorScheme.onPrimary,
           ),
         ),
         leading: IconButton(
           onPressed: router.back,
+          color: colorScheme.onPrimary,
           icon: const Icon(Icons.chevron_left),
         ),
       ),
@@ -72,27 +77,29 @@ class _CustomerDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 12,
             height: 22 / 12,
             letterSpacing: .1,
-            color: Color(0xff464646),
+            color: colorScheme.outline,
           ),
         ),
         Text(
           detail,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 14,
             height: 22 / 12,
             letterSpacing: .1,
-            color: Color(0xff1A1A1A),
+            color: colorScheme.onSurface,
           ),
         ),
       ],

@@ -30,18 +30,22 @@ class _CustomersPageState extends State<CustomersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ChangeNotifierProvider(
       create: (context) => _viewmodel,
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(
+          backgroundColor: colorScheme.primary,
+          title: Text(
             'Clientes',
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 20,
               height: 6 / 5,
               letterSpacing: .15,
+              color: colorScheme.onPrimary,
             ),
           ),
         ),
@@ -132,6 +136,7 @@ class _CustomersListState extends State<_CustomersList> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final customersViewmodel = context.read<CustomersViewmodel>();
     final customers = customersViewmodel.customers;
 
@@ -149,13 +154,15 @@ class _CustomersListState extends State<_CustomersList> {
               onTap: () =>
                   router.push(CustomerDetailsRoute(customer: customer)),
               leading: CircleAvatar(
+                backgroundColor: colorScheme.tertiaryContainer,
                 child: Text(
                   customer.id.toString(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                     height: 6 / 4,
                     letterSpacing: .15,
+                    color: colorScheme.onTertiaryContainer,
                   ),
                 ),
               ),
