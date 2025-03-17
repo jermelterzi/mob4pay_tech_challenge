@@ -1,56 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart';
+import 'package:mob4pay_tech_challenge/src/domain/customers/use_cases/customers_sync_use_case.dart';
 
 class SplashViewmodel extends ChangeNotifier {
-  final CustomersRepository _customersRepository;
+  final CustomersSyncUseCase _customersSyncUseCase;
 
-  SplashViewmodel({required CustomersRepository customersRepository})
-      : _customersRepository = customersRepository;
+  SplashViewmodel({required CustomersSyncUseCase customersSyncUseCase})
+      : _customersSyncUseCase = customersSyncUseCase;
 
-  bool isLoading = false;
-  bool isLoaded = false;
+  bool isLoading = true;
   bool hasError = false;
 
   Future<void> initApp() async {
-    isLoading = true;
-
-    notifyListeners();
-
-    final syncCustomersResult =
-        await _customersRepository.synchronizeCustomers();
+    final syncCustomersResult = await _customersSyncUseCase.syncCustomers();
 
     return syncCustomersResult.fold(
-      (success) {
+      (_) {
         isLoading = false;
-        isLoaded = true;
 
         notifyListeners();
       },
-      (_) async {
+      (_) {
+        isLoading = false;
         hasError = true;
 
         notifyListeners();
-
-        final getSavedCustomersResult =
-            await _customersRepository.getCustomers();
-
-        return getSavedCustomersResult.fold(
-          (_) {
-            isLoading = false;
-            isLoaded = true;
-
-            notifyListeners();
-
-            return;
-          },
-          (_) {
-            hasError = true;
-            isLoading = false;
-            isLoaded = true;
-
-            notifyListeners();
-          },
-        );
       },
     );
   }

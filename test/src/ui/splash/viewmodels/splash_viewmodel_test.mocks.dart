@@ -5,10 +5,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:mob4pay_tech_challenge/src/data/customers/repositories/customers_repository.dart'
-    as _i2;
 import 'package:mob4pay_tech_challenge/src/domain/customers/models/customer.dart'
     as _i5;
+import 'package:mob4pay_tech_challenge/src/domain/customers/use_cases/customers_sync_use_case.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 import 'package:result_dart/result_dart.dart' as _i4;
@@ -27,51 +27,32 @@ import 'package:result_dart/result_dart.dart' as _i4;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [CustomersRepository].
+/// A class which mocks [CustomersSyncUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCustomersRepository extends _i1.Mock
-    implements _i2.CustomersRepository {
+class MockCustomersSyncUseCase extends _i1.Mock
+    implements _i2.CustomersSyncUseCase {
   @override
-  _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>> getCustomers() =>
+  _i3.Future<_i4.ResultDart<List<_i5.Customer>, List<_i5.Customer>>>
+  syncCustomers() =>
       (super.noSuchMethod(
-            Invocation.method(#getCustomers, []),
-            returnValue:
-                _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>.value(
-                  _i6.dummyValue<_i4.ResultDart<List<_i5.Customer>, Exception>>(
-                    this,
-                    Invocation.method(#getCustomers, []),
-                  ),
-                ),
-            returnValueForMissingStub:
-                _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>.value(
-                  _i6.dummyValue<_i4.ResultDart<List<_i5.Customer>, Exception>>(
-                    this,
-                    Invocation.method(#getCustomers, []),
-                  ),
-                ),
+            Invocation.method(#syncCustomers, []),
+            returnValue: _i3.Future<
+              _i4.ResultDart<List<_i5.Customer>, List<_i5.Customer>>
+            >.value(
+              _i6.dummyValue<
+                _i4.ResultDart<List<_i5.Customer>, List<_i5.Customer>>
+              >(this, Invocation.method(#syncCustomers, [])),
+            ),
+            returnValueForMissingStub: _i3.Future<
+              _i4.ResultDart<List<_i5.Customer>, List<_i5.Customer>>
+            >.value(
+              _i6.dummyValue<
+                _i4.ResultDart<List<_i5.Customer>, List<_i5.Customer>>
+              >(this, Invocation.method(#syncCustomers, [])),
+            ),
           )
-          as _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>);
-
-  @override
-  _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>
-  synchronizeCustomers() =>
-      (super.noSuchMethod(
-            Invocation.method(#synchronizeCustomers, []),
-            returnValue:
-                _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>.value(
-                  _i6.dummyValue<_i4.ResultDart<List<_i5.Customer>, Exception>>(
-                    this,
-                    Invocation.method(#synchronizeCustomers, []),
-                  ),
-                ),
-            returnValueForMissingStub:
-                _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>.value(
-                  _i6.dummyValue<_i4.ResultDart<List<_i5.Customer>, Exception>>(
-                    this,
-                    Invocation.method(#synchronizeCustomers, []),
-                  ),
-                ),
-          )
-          as _i3.Future<_i4.ResultDart<List<_i5.Customer>, Exception>>);
+          as _i3.Future<
+            _i4.ResultDart<List<_i5.Customer>, List<_i5.Customer>>
+          >);
 }
