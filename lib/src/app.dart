@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mob4pay_tech_challenge/src/config/dependencies.dart';
 import 'package:mob4pay_tech_challenge/src/config/router.dart';
 
-final router = AppRouter();
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
